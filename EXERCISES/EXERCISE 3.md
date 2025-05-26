@@ -181,24 +181,3 @@ jobs:
 * You can check the progress and results under the **Actions** tab in your GitHub repository.
 
 ---
-
-## Optional Next Steps
-
-* Add publishing to NuGet or GitHub Packages.
-* Add more tests and projects.
-* Customize the workflow for multiple .NET versions or environments.
-
----
-
-If you want, I can help you with those next steps too!
-
----
-
-**That's it! You now have a .NET project built and tested automatically with GitHub Actions — all created without leaving GitHub's website.**
-
-```
-
----
-
-If you want, I can help you with any part of this or generate the full repo structure as a downloadable zip. Just say the word!
-```
