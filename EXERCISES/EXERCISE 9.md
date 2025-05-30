@@ -37,10 +37,13 @@ This guide explains how to automate the deployment of a .NET application to AWS 
 ```bash
 /MyDotNetApp
 ├── Controllers/
-├── Models/
+│   └── WeatherForecastController.cs
 ├── Program.cs
 ├── MyDotNetApp.csproj
-└── ...
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
+
 ```
 
 ---
@@ -148,22 +151,6 @@ The GitHub Action will:
 
 Here’s **all the necessary code** for deploying.
 
-
-## Project Structure (Example)
-
-```
-/MyDotNetApp
-├── Controllers/
-│   └── WeatherForecastController.cs
-├── Program.cs
-├── MyDotNetApp.csproj
-├── .github/
-│   └── workflows/
-│       └── deploy.yml
-```
-
----
-
 ## 1. `Program.cs`
 
 ```csharp
@@ -196,7 +183,7 @@ app.Run();
 
 ---
 
-## 🌦️ 3. `Controllers/WeatherForecastController.cs`
+## 3. `Controllers/WeatherForecastController.cs`
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;
