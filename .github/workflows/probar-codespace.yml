@@ -1,0 +1,22 @@
+name: Probar el entorno del Codespace
+on:
+  workflow_dispatch:
+  push:
+    paths: [".devcontainer/**", ".github/workflows/probar-codespace.yml"]
+jobs:
+  devcontainer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir el devcontainer y ejecutar la comprobación dentro
+        uses: devcontainers/ci@v0.3
+        with:
+          push: never
+          runCmd: |
+            bash .devcontainer/arrancar-emulador.sh
+            bash comprobar-entorno.sh 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | tee resultado.txt
+      - name: Publicar el resultado
+        if: always()
+        run: |
+          [ -f resultado.txt ] && echo "::notice title=Resultado en el devcontainer::$(sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g' resultado.txt)" || echo "::warning title=Sin resultado::no se generó resultado.txt"
