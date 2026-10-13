@@ -30,7 +30,11 @@ jobs:
       - name: Arrancar el emulador
         run: bash .devcontainer/arrancar-emulador.sh
       - name: Comprobar las funcionalidades de las prácticas
-        run: bash comprobar-entorno.sh
-      - name: Logs del emulador
+        run: |
+          set -o pipefail
+          bash comprobar-entorno.sh 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | tee resultado.txt
+      - name: Publicar el resultado como anotación
         if: always()
-        run: docker logs emulador-aws 2>&1 | tail -150
+        run: |
+          echo "::notice title=Resultado de la comprobación::$(sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g' resultado.txt)"
+          echo "::notice title=Logs del emulador::$(docker logs emulador-aws 2>&1 | tail -60 | sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g')"
