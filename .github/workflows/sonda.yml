@@ -1,0 +1,26 @@
+name: Sonda del emulador
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/sonda.sh", ".github/workflows/sonda.yml"]
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      AWS_ENDPOINT_URL: http://localhost:4566
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: eu-west-1
+      AWS_REGION: eu-west-1
+      AWS_PAGER: ""
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker pull python:3.12-slim && bash .devcontainer/arrancar-emulador.sh
+      - run: bash .github/sonda.sh > sonda.txt 2>&1 || true
+      - name: Publicar
+        if: always()
+        run: |
+          split -l 120 sonda.txt parte_
+          for f in parte_*; do echo "::notice title=$f::$(sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g' $f)"; done
+          echo "::notice title=emulador::$(docker logs emulador-aws 2>&1 | grep -iE 'warn|error|exception' | tail -60 | sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g')"
