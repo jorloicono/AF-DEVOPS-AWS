@@ -1,0 +1,26 @@
+{
+  "name": "DevOps en AWS · laboratorio local",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/aws-cli:1": {}
+  },
+  "hostRequirements": { "cpus": 2, "memory": "8gb" },
+  "containerEnv": {
+    "AWS_ENDPOINT_URL": "http://localhost:4566",
+    "AWS_ACCESS_KEY_ID": "test",
+    "AWS_SECRET_ACCESS_KEY": "test",
+    "AWS_DEFAULT_REGION": "eu-west-1",
+    "AWS_REGION": "eu-west-1",
+    "AWS_PAGER": "",
+    "FLOCI_IMAGE": "floci/floci:latest"
+  },
+  "postCreateCommand": "bash .devcontainer/preparar.sh",
+  "postStartCommand": "bash .devcontainer/arrancar-emulador.sh",
+  "forwardPorts": [4566],
+  "portsAttributes": { "4566": { "label": "Emulador AWS (Floci)", "onAutoForward": "silent" } },
+  "customizations": {
+    "codespaces": { "openFiles": ["README.md"] },
+    "vscode": { "extensions": ["redhat.vscode-yaml", "kddejong.vscode-cfn-lint"] }
+  }
+}

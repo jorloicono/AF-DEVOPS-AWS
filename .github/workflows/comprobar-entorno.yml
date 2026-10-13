@@ -1,0 +1,36 @@
+name: Comprobar entorno de prácticas
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".devcontainer/**"
+      - "comprobar-entorno.sh"
+      - ".github/workflows/comprobar-entorno.yml"
+
+jobs:
+  comprobar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      AWS_ENDPOINT_URL: http://localhost:4566
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: eu-west-1
+      AWS_REGION: eu-west-1
+      AWS_PAGER: ""
+      FLOCI_IMAGE: floci/floci:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Herramientas
+        run: |
+          aws --version
+          pip install --quiet cfn-lint pytest==8.3.3 ruff==0.6.9
+          docker pull python:3.12-slim
+      - name: Arrancar el emulador
+        run: bash .devcontainer/arrancar-emulador.sh
+      - name: Comprobar las funcionalidades de las prácticas
+        run: bash comprobar-entorno.sh
+      - name: Logs del emulador
+        if: always()
+        run: docker logs emulador-aws 2>&1 | tail -150
