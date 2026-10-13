@@ -127,12 +127,15 @@ trafico 30
 
 > **Punto de control 2.** Aproximadamente una de cada cinco peticiones la responde la versión 2. Si fuera defectuosa, solo afectaría a ese 20 %.
 
-Hacerlo a mano tiene dos problemas: alguien tiene que vigilar y alguien tiene que acordarse de deshacerlo. Devuelve todo el tráfico a la versión 1 y deja que, a partir de ahora, lo haga CodeDeploy:
+Hacerlo a mano tiene dos problemas: alguien tiene que vigilar y alguien tiene que acordarse de deshacerlo. Devuelve todo el tráfico a la versión 1 y deja que, a partir de ahora, lo haga CodeDeploy.
+
+> **Diferencia con AWS real.** En AWS bastaría con `aws lambda update-alias ... --routing-config '{"AdditionalVersionWeights": {}}'`, pero el emulador no borra así el reparto, de modo que aquí recreamos el alias apuntando solo a la versión 1.
 
 ```bash
-aws lambda update-alias --function-name lab04-saludo --name live --function-version 1 \
-  --routing-config '{"AdditionalVersionWeights": {}}' \
-  --query "[FunctionVersion,RoutingConfig.AdditionalVersionWeights]" --output json
+aws lambda delete-alias --function-name lab04-saludo --name live
+aws lambda create-alias --function-name lab04-saludo --name live --function-version 1 \
+  --query "[FunctionVersion,RoutingConfig]" --output json
+trafico 10
 ```
 
 ## Paso 4 · Las pruebas de humo (hook `BeforeAllowTraffic`)

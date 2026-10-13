@@ -349,6 +349,8 @@ esperar Aprobacion Failed
 version_en $PRO
 ```
 
+> **Cómo leer la tabla de estado.** Cada fila muestra la **última** vez que se ejecutó esa etapa, sea de la ejecución que sea. Por eso, después de rechazar, Deploy-Pro sigue apareciendo como `Succeeded`: es el despliegue de la `1.0.0` de la primera ejecución. Lo que manda es la versión que hay en el bucket.
+
 > **Punto de control 4.** La etapa Aprobacion queda en `Failed`, Deploy-Pro no se ejecuta y producción sigue en la `1.0.0`. Rechazar no es un error técnico: es la pipeline funcionando como control.
 
 ## Paso 7 · Una versión que rompe las pruebas
@@ -363,7 +365,7 @@ version_en $PRE
 aws s3 cp s3://$ARTEFACTOS/build.log - | tail -15
 ```
 
-> **Punto de control 5.** La etapa Build está en `Failed`, Deploy-Pre no se ha ejecutado y preproducción sigue con la `1.1.0`: el cambio roto **no ha llegado a ningún entorno**. El log del build te dice qué prueba ha fallado.
+> **Punto de control 5.** La etapa Build está en `Failed`, Deploy-Pre no se ha ejecutado (su `Succeeded` es de la ejecución anterior) y preproducción sigue con la `1.1.0`: el cambio roto **no ha llegado a ningún entorno**. El log del build te dice qué prueba ha fallado.
 
 Corrígelo, publica y lleva la versión buena hasta producción:
 
