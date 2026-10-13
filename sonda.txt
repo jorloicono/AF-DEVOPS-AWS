@@ -1,0 +1,121 @@
+
+######## A: proyecto con fuente S3, sin salida (07:48:04)
+s-build-s3
+pipeA
+b19ef980-c453-452d-8573-b48fb23b44d0
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	None 
+Succeeded	Action completed.
+-- pre
+2026-10-13 07:48:05        371 PublicarPre.zip
+download failed: s3://s-pre/index.html to - An error occurred (404) when calling the HeadObject operation: Not Found
+[
+    {
+        "actionExecutionId": "8799d542-2637-4024-83b6-111334a24772",
+        "status": "InProgress",
+        "summary": "Waiting for approval.",
+        "lastStatusChange": "2026-10-13T07:48:05.916000+00:00",
+        "token": "d7c2162f-b689-459c-88c5-87b4efa1c49a",
+        "percentComplete": 50
+    }
+]
+token=d7c2162f-b689-459c-88c5-87b4efa1c49a
+{
+    "approvedAt": "2026-10-13T07:48:49.764000+00:00"
+}
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+-- pro
+2026-10-13 07:48:49        371 PublicarPro.zip
+download failed: s3://s-pro/index.html to - An error occurred (404) when calling the HeadObject operation: Not Found
+
+######## A2: cambio de version detectado por sondeo (07:49:18)
+Source	Succeeded Build	InProgress Deploy-Pre	Succeeded Aprobacion	Succeeded Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	InProgress Deploy-Pro	Succeeded 
+InProgress	PollForSourceChanges
+Succeeded	StartPipelineExecution
+download failed: s3://s-pre/index.html to - An error occurred (404) when calling the HeadObject operation: Not Found
+download failed: s3://s-pro/index.html to - An error occurred (404) when calling the HeadObject operation: Not Found
+-- rechazar
+token=94d9c8e5-db7a-4959-8a28-e46e1777904c
+{
+    "approvedAt": "2026-10-13T07:50:50.218000+00:00"
+}
+Source	Succeeded Build	Succeeded Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+download failed: s3://s-pro/index.html to - An error occurred (404) when calling the HeadObject operation: Not Found
+
+######## A3: version que rompe la prueba (07:50:55)
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+Source	Succeeded Build	Failed Deploy-Pre	Succeeded Aprobacion	Failed Deploy-Pro	Succeeded 
+download failed: s3://s-pre/index.html to - An error occurred (404) when calling the HeadObject operation: Not Found
+
+######## B: proyecto CODEPIPELINE con buildspec en el proyecto (07:52:02)
+s-build-cp
+pipeB
+7a7d498e-e780-4549-90d6-ec9ea2aaaff7
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Source	Succeeded Build	Succeeded Deploy-Pre	Failed Aprobacion	None Deploy-Pro	None 
+Succeeded	Action completed.
+[pwd.txt]
+download failed: s3://s-pre/pwd.txt to - An error occurred (404) when calling the HeadObject operation: Not Found
+[ls.txt]
+download failed: s3://s-pre/ls.txt to - An error occurred (404) when calling the HeadObject operation: Not Found
+[index.html]
+download failed: s3://s-pre/index.html to - An error occurred (404) when calling the HeadObject operation: Not Found
