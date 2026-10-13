@@ -1,0 +1,28 @@
+Esperando al emulador de AWS · listo en http://localhost:4566
+== Emulador
+  OK     responde en http://localhost:4566
+== Lab 01 · CloudFormation
+  OK     deploy (crear stack mediante change set)
+  OK     outputs del stack (comprobar-prueba-000000000000)
+  OK     create-change-set
+  OK     describe-change-set: Tema Modify True 
+  OK     el change set indica el reemplazo (Replacement=True)
+  OK     execute-change-set
+  OK     detect-stack-drift no existe en el emulador (esperado: el Lab 01 hace la comprobación a mano)
+  OK     etiquetas del bucket
+== Lab 02 · S3, Parameter Store y CodeBuild
+  OK     S3 subir objeto
+  OK     Parameter Store
+  OK     create-project (fuente S3)
+  OK     start-build (comprobar-cb:1)
+  OK     el build se ejecuta y termina en SUCCEEDED
+  OK     el código de S3 se ejecuta en el contenedor y build.log llega a S3
+  OK     artefacto subido a S3
+== Sesión 2 (orientativo)
+  OK     CodePipeline responde
+  OK     CodeDeploy con configuraciones canary de Lambda
+  OK     Lambda responde
+== Limpieza
+
+Resultado: todo lo necesario para la sesión 1 funciona.
+exec rc=0

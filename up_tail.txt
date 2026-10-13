@@ -1,0 +1,120 @@
+#16 18.96  65400K .......... .......... .......... .......... .......... 98%  493M 0s
+#16 18.96  65450K .......... .......... .......... .......... .......... 98%  425M 0s
+#16 18.96  65500K .......... .......... .......... .......... .......... 98%  484M 0s
+#16 18.96  65550K .......... .......... .......... .......... .......... 98%  482M 0s
+#16 18.96  65600K .......... .......... .......... .......... .......... 98%  142M 0s
+#16 18.96  65650K .......... .......... .......... .......... .......... 98%  140M 0s
+#16 18.96  65700K .......... .......... .......... .......... .......... 98%  451M 0s
+#16 18.96  65750K .......... .......... .......... .......... .......... 98%  384M 0s
+#16 18.96  65800K .......... .......... .......... .......... .......... 98%  386M 0s
+#16 18.96  65850K .......... .......... .......... .......... .......... 98%  490M 0s
+[2026-10-13T06:49:45.654Z] 
+#16 18.96  65900K .......... .......... .......... .......... .......... 98%  457M 0s
+#16 18.96  65950K .......... .......... .......... .......... .......... 98%  397M 0s
+#16 18.96  66000K .......... .......... .......... .......... .......... 98%  453M 0s
+#16 18.96  66050K .......... .......... .......... .......... .......... 99%  468M 0s
+#16 18.96  66100K .......... .......... .......... .......... .......... 99%  432M 0s
+#16 18.96  66150K .......... .......... .......... .......... .......... 99%  383M 0s
+#16 18.96  66200K .......... .......... .......... .......... .......... 99%  454M 0s
+#16 18.96  66250K .......... .......... .......... .......... .......... 99%  368M 0s
+#16 18.96  66300K .......... .......... .......... .......... .......... 99%  456M 0s
+#16 18.96  66350K .......... .......... .......... .......... .......... 99%  448M 0s
+#16 18.96  66400K .......... .......... .......... .......... .......... 99%  379M 0s
+#16 18.96  66450K .......... .......... .......... .......... .......... 99%  411M 0s
+#16 18.96  66500K .......... .......... .......... .......... .......... 99%  438M 0s
+#16 18.96  66550K .......... .......... .......... .......... .......... 99%  420M 0s
+#16 18.96  66600K .......... .......... .......... .......... .......... 99%  423M 0s
+#16 18.96  66650K .......... .......... .......... .......... .......... 99%  475M 0s
+#16 18.96  66700K .......... .......... .......... .......... ........  100%  121M=0.3s
+#16 18.96 
+#16 18.96 2026-10-13 06:49:45 (207 MB/s) - ‘buildx-v0.38.0.linux-amd64’ saved [68350114/68350114]
+#16 18.96 
+#16 18.99 docker-in-docker-debian script has completed!
+
+[2026-10-13T06:49:46.113Z] #16 DONE 19.6s
+
+[2026-10-13T06:49:46.265Z] 
+#17 exporting to image
+#17 exporting layers
+
+[2026-10-13T06:49:50.405Z] #17 exporting layers 4.3s done
+
+[2026-10-13T06:49:50.445Z] #17 preparing layers for inline cache done
+#17 writing image sha256:f28044316947cd656463f1d6f63d1f701efd0a180f4c0b57511b811305fac52f done
+#17 naming to docker.io/library/vsc-af-devops-aws-3f816dc1ff310df7f0576fa8fb9ab55e6fe9fff0e65af084d545b2b7eb6c95e1 done
+#17 DONE 4.3s
+
+[2026-10-13T06:49:50.447Z] 
+ 2 warnings found (use docker --debug to expand):
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "AWS_ACCESS_KEY_ID") (line 66)
+ - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "AWS_SECRET_ACCESS_KEY") (line 67)
+
+[2026-10-13T06:49:52.790Z] Start: Run: docker run --sig-proxy=false -a STDOUT -a STDERR --mount type=bind,source=/home/runner/work/AF-DEVOPS-AWS/AF-DEVOPS-AWS,target=/workspaces/AF-DEVOPS-AWS --mount type=volume,src=dind-var-lib-docker-0365hdjblfvi3vkbdp2mc6g9vbc325bpmhpld11tnb3agggbsq9m,dst=/var/lib/docker -l devcontainer.local_folder=/home/runner/work/AF-DEVOPS-AWS/AF-DEVOPS-AWS -l devcontainer.config_file=/home/runner/work/AF-DEVOPS-AWS/AF-DEVOPS-AWS/.devcontainer/devcontainer.json -e AWS_ENDPOINT_URL=http://localhost:4566 -e AWS_ACCESS_KEY_ID=test -e AWS_SECRET_ACCESS_KEY=test -e AWS_DEFAULT_REGION=eu-west-1 -e AWS_REGION=eu-west-1 -e AWS_PAGER= -e FLOCI_IMAGE=floci/floci:latest --privileged --entrypoint /bin/sh vsc-af-devops-aws-3f816dc1ff310df7f0576fa8fb9ab55e6fe9fff0e65af084d545b2b7eb6c95e1-uid -c echo Container started
+[2026-10-13T06:49:52.947Z] Container started
+[2026-10-13T06:49:52.971Z] Setting dockerd Azure DNS.
+[2026-10-13T06:49:53.117Z] Running the postCreateCommand from devcontainer.json...
+
+[2026-10-13T06:50:03.795Z] 
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+[2026-10-13T06:50:04.478Z] latest: Pulling from floci/floci
+[2026-10-13T06:50:04.668Z] e45badac8c9a: Pulling fs layer
+6f0f7de2f99d: Pulling fs layer
+1bee3c016551: Pulling fs layer
+b526625211ef: Pulling fs layer
+227bdb4b4505: Pulling fs layer
+b21406300b38: Pulling fs layer
+[2026-10-13T06:50:04.916Z] 6f0f7de2f99d: Download complete
+[2026-10-13T06:50:04.916Z] b526625211ef: 
+[2026-10-13T06:50:04.916Z] Download complete
+[2026-10-13T06:50:04.917Z] 1bee3c016551: Download complete
+[2026-10-13T06:50:04.917Z] b21406300b38: Download complete
+[2026-10-13T06:50:05.116Z] 25dda6e46943: 
+[2026-10-13T06:50:05.117Z] Download complete
+44136fa355b3: Download complete
+227bdb4b4505: Download complete
+e45badac8c9a: 
+[2026-10-13T06:50:05.117Z] Download complete
+7300a79099c6: 
+[2026-10-13T06:50:05.117Z] Download complete
+[2026-10-13T06:50:05.215Z] 44136fa355b3: 
+[2026-10-13T06:50:05.216Z] Download complete
+[2026-10-13T06:50:05.216Z] 6f0f7de2f99d: Pull complete
+[2026-10-13T06:50:05.216Z] b526625211ef: Pull complete
+[2026-10-13T06:50:05.217Z] 1bee3c016551: 
+[2026-10-13T06:50:05.217Z] Pull complete
+[2026-10-13T06:50:05.218Z] b21406300b38: Pull complete
+[2026-10-13T06:50:05.219Z] 227bdb4b4505: 
+[2026-10-13T06:50:05.220Z] Pull complete
+[2026-10-13T06:50:05.315Z] 472150640448: Download complete
+[2026-10-13T06:50:06.090Z] e45badac8c9a: Pull complete
+Digest: sha256:e97cd0c1dc2aa14e7697fb5ef5018404c4d6345169dbd276315f0bed2c7b0520
+Status: Downloaded newer image for floci/floci:latest
+[2026-10-13T06:50:06.090Z] docker.io/floci/floci:latest
+[2026-10-13T06:50:06.693Z] 3.12-slim: Pulling from library/python
+[2026-10-13T06:50:06.910Z] bbc5a1223747: Pulling fs layer
+75b6a36c64a1: Pulling fs layer
+ecc510c1e359: Pulling fs layer
+6912e23eb445: Pulling fs layer
+[2026-10-13T06:50:07.118Z] bbc5a1223747: Download complete
+[2026-10-13T06:50:07.119Z] 75b6a36c64a1: Download complete
+6912e23eb445: Download complete
+[2026-10-13T06:50:07.320Z] 97c6e8c8dabe: 
+[2026-10-13T06:50:07.321Z] Download complete
+611ca50ea732: Download complete
+[2026-10-13T06:50:07.322Z] ecc510c1e359: Download complete
+[2026-10-13T06:50:07.820Z] 75b6a36c64a1: Pull complete
+[2026-10-13T06:50:07.821Z] ecc510c1e359: 
+[2026-10-13T06:50:07.821Z] Pull complete
+[2026-10-13T06:50:08.085Z] bbc5a1223747: Pull complete
+[2026-10-13T06:50:08.086Z] 6912e23eb445: Pull complete
+Digest: sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+Status: Downloaded newer image for python:3.12-slim
+[2026-10-13T06:50:08.087Z] docker.io/library/python:3.12-slim
+[2026-10-13T06:50:08.088Z] Entorno preparado.
+[2026-10-13T06:50:08.095Z] Running the postStartCommand from devcontainer.json...
+
+[2026-10-13T06:50:09.451Z] Esperando al emulador de AWS
+[2026-10-13T06:50:10.067Z]  · listo en http://localhost:4566
+{"outcome":"success","containerId":"6faa003c8d13ed55ca2b6df2661bc8a815a43f6fcc9cc32472f17bbdf07085c1","remoteUser":"vscode","remoteWorkspaceFolder":"/workspaces/AF-DEVOPS-AWS","ociAuthDiagnostics":{"authLookupWouldBeBlocked":false,"registryRedirectWouldPreventCredentialForwarding":false,"authServerRedirect":false}}
+up rc=0
