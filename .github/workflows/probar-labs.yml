@@ -6,7 +6,7 @@ permissions:
 jobs:
   probar:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       AWS_ENDPOINT_URL: http://localhost:4566
       AWS_ACCESS_KEY_ID: test
@@ -23,12 +23,16 @@ jobs:
         run: python .github/ejecutar-lab.py practicas/Lab01_cloudformation/Lab01_cloudformation.md > lab01.sh && bash lab01.sh > lab01.txt 2>&1 || true
       - name: Lab 02
         run: python .github/ejecutar-lab.py practicas/Lab02_codebuild/Lab02_codebuild.md > lab02.sh && bash lab02.sh > lab02.txt 2>&1 || true
+      - name: Lab 03
+        run: python .github/ejecutar-lab.py practicas/Lab03_codepipeline/Lab03_codepipeline.md > lab03.sh && bash lab03.sh > lab03.txt 2>&1 || true
+      - name: Lab 04
+        run: python .github/ejecutar-lab.py practicas/Lab04_canary_rollback/Lab04_canary_rollback.md > lab04.sh && bash lab04.sh > lab04.txt 2>&1 || true
       - name: Guardar resultados
         if: always()
         run: |
           docker logs emulador-aws > emulador.log 2>&1 || true
           git config user.name "pruebas"; git config user.email "pruebas@users.noreply.github.com"
           git checkout --orphan resultados-labs
-          git rm -rq --cached . ; git add -f lab01.txt lab02.txt emulador.log
+          git rm -rq --cached . ; touch lab01.txt lab02.txt lab03.txt lab04.txt; git add -f lab0*.txt emulador.log
           git commit -qm "Resultados $GITHUB_RUN_ID"
           git push -qf origin resultados-labs
