@@ -1,0 +1,156 @@
+ _____  _      ___   ____   __
+|  ___|| |    / _ \ / ___| | |
+| |_   | |   | | | || |    | |
+|  _|  | |___| |_| || |__  | |
+|_|    |_____|\___/ \____| |_|
+
+   AWS Local Emulator  ·  Always Free
+
+            Powered by Quarkus 3.39.2
+2026-10-13 08:39:55,403 INFO  [io.git.hec.flo.ser.clo.CloudTrailLogWriter] CloudTrail log writer started (flushIntervalSeconds=60)
+2026-10-13 08:39:55,404 INFO  [io.git.hec.flo.ser.fir.FirehoseService] Firehose buffer flusher started (tick every 10s)
+2026-10-13 08:39:55,404 INFO  [io.git.hec.flo.ser.iot.IotMqttBrokerService] IoT MQTT broker auto-start disabled by configuration
+2026-10-13 08:39:55,404 INFO  [io.git.hec.flo.cor.com.doc.ContainerDetector] Container detection result: true
+2026-10-13 08:39:55,405 INFO  [io.git.hec.flo.cor.com.dns.EmbeddedDnsServer] Embedded DNS server started on 172.17.0.2:53, resolving [localhost.floci.io, localhost.localstack.cloud] → 172.17.0.2
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] === AWS Local Emulator 2.2.0 Starting ===
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] Endpoint:  http://0.0.0.0:4566
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] Region:    eu-west-1  Account: 000000000000
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] Storage:   memory  Path: /app/data
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] TLS:       disabled (HTTP only)
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] IAM:       policy enforcement disabled (set FLOCI_SERVICES_IAM_ENFORCEMENT_ENABLED=true to enforce)
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.cor.sto.PersistentPathValidator] Storage mode: persistent (state for resourceexplorer2=hybrid is written to /app/data)
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.cor.com.ServiceRegistry] Enabled services: [ssm, sqs, s3, dynamodb, sns, lambda, apigateway, iam, msk, amazonmq, elasticache, memorydb, rds, rds-data, neptune, docdb, redshift, redshift-data, redshift-serverless, eventbridge, cloudmap, emr, emrserverless, wafv2, scheduler, cloudwatchlogs, cloudwatchmetrics, secretsmanager, apigatewayv2, kinesis, kinesisanalytics, kms, cognito, stepfunctions, swf, cloudformation, acm, athena, glue, firehose, ses, opensearch, ec2, ecs, appconfig, appconfigdata, ecr, tagging, bedrock, bedrock-runtime, eks, mwaa, pipes, bedrock-agentcore-control, bedrock-agentcore, elbv2, elb, codebuild, batch, sagemaker, codedeploy, codepipeline, servicequotas, ram, configservice, cloudtrail, lightsail, cloudcontrol, ssoadmin, ssooidc, macie2, account, accessanalyzer, identitystore, budgets, detective, inspector2, securityhub, autoscaling, applicationautoscaling, elasticbeanstalk, backup, resourceexplorer2, fis, transfer, route53, textract, comprehend, rekognition, pricing, transcribe, translate, ce, cur, bcmpricingcalculator, timestreaminfluxdb, bcmdataexports, oam, cloudfront, appsync, s3vectors, s3tables, iot, iotdata, cloudhsmv2, organizations, rum, guardduty, route53resolver, connect, appintegrations, dlm, cognitoidentity, globalaccelerator, datasync, networkfirewall, servicecatalog, controlcatalog, controltower, aps, lakeformation, efs, codegurureviewer, codeartifact, verifiedpermissions, marketplace, dms]
+2026-10-13 08:39:55,407 INFO  [io.git.hec.flo.ser.app.gra.SchemaCreationWorker] SchemaCreationWorker started with 4 threads
+2026-10-13 08:39:55,408 INFO  [io.git.hec.flo.ser.dyn.DynamoDbTtlService] DynamoDB TTL sweeper scheduled (60s interval)
+2026-10-13 08:39:55,408 INFO  [io.git.hec.flo.ser.lam.SqsEventSourcePoller] SqsEventSourcePoller initialized, 0 ESM(s) active
+2026-10-13 08:39:55,408 INFO  [io.git.hec.flo.ser.lam.DynamoDbStreamsEventSourcePoller] DynamoDbStreamsEventSourcePoller initialized
+2026-10-13 08:39:55,409 INFO  [io.git.hec.flo.cor.com.doc.DockerClientProducer] Creating control-plane DockerClient pool (maxConnections=1,024) for host: unix:///var/run/docker.sock
+2026-10-13 08:39:55,412 INFO  [io.git.hec.flo.cor.com.doc.DockerClientProducer] Wrapping control-plane docker transport in transient-I/O retry
+2026-10-13 08:39:55,415 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] === AWS Local Emulator Ready ===
+2026-10-13 08:39:55,415 INFO  [io.git.hec.flo.lif.EmulatorLifecycle] Ready.
+2026-10-13 08:39:55,416 INFO  [io.git.hec.flo.ser.ec2.Ec2MetadataServer] EC2 IMDS server listening on port 9169
+2026-10-13 08:39:55,416 INFO  [io.git.hec.flo.ser.sch.ScheduleDispatcher] Scheduler dispatcher started (tick every 10s)
+2026-10-13 08:39:55,416 INFO  [io.git.hec.flo.ser.sqs.SqsRetentionSweeper] SQS retention sweeper scheduled (60s interval)
+2026-10-13 08:39:55,416 INFO  [io.git.hec.flo.ser.sec.SecretRotationScheduler] Secrets Manager rotation scheduler started (tick every 60s)
+2026-10-13 08:39:55,417 INFO  [io.git.hec.flo.ser.ec2.FlowLogService] FlowLog generator scheduled (every 60s)
+2026-10-13 08:39:55,417 INFO  [io.git.hec.flo.con.PartitionStartupValidator] Partition: aws (default-region eu-west-1, dns suffix amazonaws.com)
+2026-10-13 08:39:55,417 INFO  [io.quarkus] floci 2.2.0 native (powered by Quarkus 3.39.2) started in 0.030s. Listening on: http://0.0.0.0:4566
+2026-10-13 08:39:55,417 INFO  [io.quarkus] Profile prod activated. 
+2026-10-13 08:39:55,417 INFO  [io.quarkus] Installed features: [cdi, config-yaml, rest, rest-jackson, security, smallrye-context-propagation, vertx]
+2026-10-13 08:40:00,678 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM role: lab04-funcion
+2026-10-13 08:40:01,492 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM role: lab04-codedeploy
+2026-10-13 08:40:02,295 INFO  [io.git.hec.flo.ser.iam.IamService] Created IAM role: lab04-hook
+2026-10-13 08:40:04,859 INFO  [io.git.hec.flo.ser.s3.S3Service] Created bucket: awslambda-eu-west-1-tasks in region: eu-west-1
+2026-10-13 08:40:04,860 INFO  [io.git.hec.flo.ser.lam.LambdaService] Created Lambda function: lab04-saludo in region eu-west-1
+2026-10-13 08:40:05,661 INFO  [io.git.hec.flo.ser.lam.LambdaService] Published version 1 for function lab04-saludo
+2026-10-13 08:40:06,046 INFO  [io.git.hec.flo.ser.lam.LambdaService] Created alias live for function lab04-saludo in eu-west-1
+2026-10-13 08:40:06,440 INFO  [io.git.hec.flo.ser.lam.WarmPool] Warm pool idle eviction enabled: timeout=300s, check interval=30s
+2026-10-13 08:40:06,440 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Launching container for function: lab04-saludo
+2026-10-13 08:40:06,441 INFO  [io.git.hec.flo.ser.lam.run.RuntimeApiServer] RuntimeApiServer started on port 12000
+2026-10-13 08:40:06,449 INFO  [io.git.hec.flo.cor.com.doc.CurrentContainerNetworkResolver] Detected current Docker network for spawned containers: bridge (172.17.0.2)
+2026-10-13 08:40:06,449 INFO  [io.git.hec.flo.cor.com.doc.DockerHostResolver] Running in Docker — using current network IP for Runtime API: 172.17.0.2
+2026-10-13 08:40:06,458 INFO  [io.git.hec.flo.ser.lam.lau.ImageCacheService] Pulling image: public.ecr.aws/lambda/python:3.12
+2026-10-13 08:40:14,902 INFO  [io.git.hec.flo.ser.lam.lau.ImageCacheService] Image pulled successfully: public.ecr.aws/lambda/python:3.12
+2026-10-13 08:40:14,913 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Created container df09a114cdb83c3b8443611e5e3fddaeb8315c0f11b32518b2d176c387923b9f (name=floci-aws-lab04-saludo-31a35b67, not yet started)
+2026-10-13 08:40:14,913 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Created container df09a114cdb83c3b8443611e5e3fddaeb8315c0f11b32518b2d176c387923b9f for function lab04-saludo
+2026-10-13 08:40:15,052 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Started container df09a114cdb83c3b8443611e5e3fddaeb8315c0f11b32518b2d176c387923b9f
+2026-10-13 08:40:15,052 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log group: /aws/lambda/lab04-saludo in region eu-west-1
+2026-10-13 08:40:15,052 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log stream: /aws/lambda/lab04-saludo/2026/10/13/[$LATEST]31a35b67
+2026-10-13 08:40:15,053 INFO  [io.git.hec.flo.cor.com.doc.DockerClientProducer] Creating streaming DockerClient pool (maxConnections=512) for host: unix:///var/run/docker.sock
+2026-10-13 08:40:19,100 INFO  [io.git.hec.flo.ser.lam.WarmPool] Draining 0 container(s) for Lambda environment: arn:aws:lambda:eu-west-1:000000000000:function:lab04-saludo
+2026-10-13 08:40:19,100 INFO  [io.git.hec.flo.ser.lam.LambdaService] Updated code for function: lab04-saludo
+2026-10-13 08:40:19,887 INFO  [io.git.hec.flo.ser.lam.LambdaService] Published version 2 for function lab04-saludo
+2026-10-13 08:40:21,821 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Launching container for function: lab04-saludo
+2026-10-13 08:40:21,822 INFO  [io.git.hec.flo.ser.lam.run.RuntimeApiServer] RuntimeApiServer started on port 12001
+2026-10-13 08:40:21,822 INFO  [io.git.hec.flo.cor.com.doc.DockerHostResolver] Running in Docker — using current network IP for Runtime API: 172.17.0.2
+2026-10-13 08:40:21,844 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Created container 9d218d2f48873d9592705fa8008150bac3b2a9a472d766f92201f7796692c90a (name=floci-aws-lab04-saludo-6865277c, not yet started)
+2026-10-13 08:40:21,844 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Created container 9d218d2f48873d9592705fa8008150bac3b2a9a472d766f92201f7796692c90a for function lab04-saludo
+2026-10-13 08:40:21,919 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Started container 9d218d2f48873d9592705fa8008150bac3b2a9a472d766f92201f7796692c90a
+2026-10-13 08:40:21,919 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log stream: /aws/lambda/lab04-saludo/2026/10/13/[$LATEST]6865277c
+2026-10-13 08:40:32,560 INFO  [io.git.hec.flo.ser.lam.LambdaService] Deleted alias live for function lab04-saludo
+2026-10-13 08:40:32,950 INFO  [io.git.hec.flo.ser.lam.LambdaService] Created alias live for function lab04-saludo in eu-west-1
+2026-10-13 08:40:37,331 INFO  [io.git.hec.flo.ser.lam.LambdaService] Created Lambda function: lab04-pruebas-humo in region eu-west-1
+2026-10-13 08:40:38,212 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: CreateApplication
+2026-10-13 08:40:38,643 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: CreateDeploymentGroup
+2026-10-13 08:40:39,489 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: CreateDeployment
+2026-10-13 08:40:39,490 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Launching container for function: lab04-pruebas-humo
+2026-10-13 08:40:39,490 INFO  [io.git.hec.flo.ser.lam.run.RuntimeApiServer] RuntimeApiServer started on port 12002
+2026-10-13 08:40:39,490 INFO  [io.git.hec.flo.cor.com.doc.DockerHostResolver] Running in Docker — using current network IP for Runtime API: 172.17.0.2
+2026-10-13 08:40:39,517 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Created container abcee06acaedeaf1375cf70e89986df99b60fabf077dba3cb694a632ac178c1b (name=floci-aws-lab04-pruebas-humo-9c762493, not yet started)
+2026-10-13 08:40:39,517 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Created container abcee06acaedeaf1375cf70e89986df99b60fabf077dba3cb694a632ac178c1b for function lab04-pruebas-humo
+2026-10-13 08:40:39,598 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Started container abcee06acaedeaf1375cf70e89986df99b60fabf077dba3cb694a632ac178c1b
+2026-10-13 08:40:39,599 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log group: /aws/lambda/lab04-pruebas-humo in region eu-west-1
+2026-10-13 08:40:39,599 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log stream: /aws/lambda/lab04-pruebas-humo/2026/10/13/[$LATEST]9c762493
+2026-10-13 08:40:39,778 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:40:39,803 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-pruebas-humo] Pruebas de humo sobre la versión 2: 0/10 errores -> Succeeded
+2026-10-13 08:40:39,804 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: PutLifecycleEventHookExecutionStatus
+2026-10-13 08:40:39,935 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:40:41,732 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:40:43,550 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:40:45,339 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:40:46,137 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:40:50,670 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller logs action: FilterLogEvents
+2026-10-13 08:40:51,095 INFO  [io.git.hec.flo.ser.lam.WarmPool] Draining 0 container(s) for Lambda environment: arn:aws:lambda:eu-west-1:000000000000:function:lab04-saludo
+2026-10-13 08:40:51,095 INFO  [io.git.hec.flo.ser.lam.LambdaService] Updated code for function: lab04-saludo
+2026-10-13 08:40:51,889 INFO  [io.git.hec.flo.ser.lam.LambdaService] Published version 3 for function lab04-saludo
+2026-10-13 08:40:52,711 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: CreateDeployment
+2026-10-13 08:40:52,714 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:40:52,716 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Launching container for function: lab04-saludo
+2026-10-13 08:40:52,716 INFO  [io.git.hec.flo.ser.lam.run.RuntimeApiServer] RuntimeApiServer started on port 12003
+2026-10-13 08:40:52,716 INFO  [io.git.hec.flo.cor.com.doc.DockerHostResolver] Running in Docker — using current network IP for Runtime API: 172.17.0.2
+2026-10-13 08:40:52,737 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Created container 10cea079ed26ae2493b83d7336368ce787fd289ee79673940134837e3dc66a55 (name=floci-aws-lab04-saludo-86a0d78f, not yet started)
+2026-10-13 08:40:52,737 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Created container 10cea079ed26ae2493b83d7336368ce787fd289ee79673940134837e3dc66a55 for function lab04-saludo
+2026-10-13 08:40:52,829 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Started container 10cea079ed26ae2493b83d7336368ce787fd289ee79673940134837e3dc66a55
+2026-10-13 08:40:52,830 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log stream: /aws/lambda/lab04-saludo/2026/10/13/[$LATEST]86a0d78f
+2026-10-13 08:40:52,853 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-saludo] [ERROR] RuntimeError: Fallo simulado en la versión 2.0.0Traceback (most recent call last):  File "/var/task/index.py", line 10, in handler    raise RuntimeError(f"Fallo simulado en la versión {VERSION}")
+2026-10-13 08:40:52,857 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-saludo] [ERROR] RuntimeError: Fallo simulado en la versión 2.0.0Traceback (most recent call last):  File "/var/task/index.py", line 10, in handler    raise RuntimeError(f"Fallo simulado en la versión {VERSION}")
+2026-10-13 08:40:52,864 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-saludo] [ERROR] RuntimeError: Fallo simulado en la versión 2.0.0Traceback (most recent call last):  File "/var/task/index.py", line 10, in handler    raise RuntimeError(f"Fallo simulado en la versión {VERSION}")
+2026-10-13 08:40:52,869 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-saludo] [ERROR] RuntimeError: Fallo simulado en la versión 2.0.0Traceback (most recent call last):  File "/var/task/index.py", line 10, in handler    raise RuntimeError(f"Fallo simulado en la versión {VERSION}")
+2026-10-13 08:40:52,871 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-saludo] [ERROR] RuntimeError: Fallo simulado en la versión 2.0.0Traceback (most recent call last):  File "/var/task/index.py", line 10, in handler    raise RuntimeError(f"Fallo simulado en la versión {VERSION}")
+2026-10-13 08:40:52,875 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-saludo] [ERROR] RuntimeError: Fallo simulado en la versión 2.0.0Traceback (most recent call last):  File "/var/task/index.py", line 10, in handler    raise RuntimeError(f"Fallo simulado en la versión {VERSION}")
+2026-10-13 08:40:52,876 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-pruebas-humo] Pruebas de humo sobre la versión 3: 6/10 errores -> Failed
+2026-10-13 08:40:52,877 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: PutLifecycleEventHookExecutionStatus
+2026-10-13 08:40:53,149 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:40:53,977 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:02,741 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller logs action: FilterLogEvents
+2026-10-13 08:41:03,163 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: ListDeployments
+2026-10-13 08:41:03,585 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:03,981 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:04,443 INFO  [io.git.hec.flo.ser.lam.WarmPool] Draining 0 container(s) for Lambda environment: arn:aws:lambda:eu-west-1:000000000000:function:lab04-saludo
+2026-10-13 08:41:04,444 INFO  [io.git.hec.flo.ser.lam.LambdaService] Updated code for function: lab04-saludo
+2026-10-13 08:41:05,248 INFO  [io.git.hec.flo.ser.lam.LambdaService] Published version 4 for function lab04-saludo
+2026-10-13 08:41:06,053 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: CreateDeployment
+2026-10-13 08:41:06,055 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:06,058 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Launching container for function: lab04-saludo
+2026-10-13 08:41:06,058 INFO  [io.git.hec.flo.ser.lam.run.RuntimeApiServer] RuntimeApiServer started on port 12004
+2026-10-13 08:41:06,058 INFO  [io.git.hec.flo.cor.com.doc.DockerHostResolver] Running in Docker — using current network IP for Runtime API: 172.17.0.2
+2026-10-13 08:41:06,085 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Created container 5832523498e9ef11321fe9052ebbad167917d0e34fbece38164aef86b1b4ae80 (name=floci-aws-lab04-saludo-9f5610a0, not yet started)
+2026-10-13 08:41:06,085 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Created container 5832523498e9ef11321fe9052ebbad167917d0e34fbece38164aef86b1b4ae80 for function lab04-saludo
+2026-10-13 08:41:06,207 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Started container 5832523498e9ef11321fe9052ebbad167917d0e34fbece38164aef86b1b4ae80
+2026-10-13 08:41:06,208 INFO  [io.git.hec.flo.ser.clo.log.CloudWatchLogsService] Created log stream: /aws/lambda/lab04-saludo/2026/10/13/[$LATEST]9f5610a0
+2026-10-13 08:41:06,265 INFO  [io.git.hec.flo.cor.com.doc.ContainerLogStreamer] [lambda:lab04-pruebas-humo] Pruebas de humo sobre la versión 4: 0/10 errores -> Succeeded
+2026-10-13 08:41:06,265 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: PutLifecycleEventHookExecutionStatus
+2026-10-13 08:41:06,532 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:08,316 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:10,089 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:11,875 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:12,675 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: GetDeployment
+2026-10-13 08:41:17,094 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: DeleteDeploymentGroup
+2026-10-13 08:41:17,494 INFO  [io.git.hec.flo.cor.com.AwsJson11Controller] AwsJson11Controller codedeploy action: DeleteApplication
+2026-10-13 08:41:17,896 INFO  [io.git.hec.flo.ser.lam.WarmPool] Draining 4 container(s) for function: lab04-saludo
+2026-10-13 08:41:17,897 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Stopping container df09a114cdb83c3b8443611e5e3fddaeb8315c0f11b32518b2d176c387923b9f
+2026-10-13 08:41:17,897 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Stopping container 10cea079ed26ae2493b83d7336368ce787fd289ee79673940134837e3dc66a55
+2026-10-13 08:41:17,897 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Stopping container 9d218d2f48873d9592705fa8008150bac3b2a9a472d766f92201f7796692c90a
+2026-10-13 08:41:17,897 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Stopping container df09a114cdb83c3b8443611e5e3fddaeb8315c0f11b32518b2d176c387923b9f
+2026-10-13 08:41:17,897 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Stopping container 10cea079ed26ae2493b83d7336368ce787fd289ee79673940134837e3dc66a55
+2026-10-13 08:41:17,897 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Stopping container 9d218d2f48873d9592705fa8008150bac3b2a9a472d766f92201f7796692c90a
+2026-10-13 08:41:17,897 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Stopping container 5832523498e9ef11321fe9052ebbad167917d0e34fbece38164aef86b1b4ae80
+2026-10-13 08:41:17,897 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Stopping container 5832523498e9ef11321fe9052ebbad167917d0e34fbece38164aef86b1b4ae80
+2026-10-13 08:41:19,051 INFO  [io.git.hec.flo.ser.lam.LambdaService] Deleted Lambda function: lab04-saludo
+2026-10-13 08:41:19,525 INFO  [io.git.hec.flo.ser.lam.WarmPool] Draining 1 container(s) for function: lab04-pruebas-humo
+2026-10-13 08:41:19,525 INFO  [io.git.hec.flo.ser.lam.lau.ContainerLauncher] Stopping container abcee06acaedeaf1375cf70e89986df99b60fabf077dba3cb694a632ac178c1b
+2026-10-13 08:41:19,525 INFO  [io.git.hec.flo.cor.com.doc.ContainerLifecycleManager] Stopping container abcee06acaedeaf1375cf70e89986df99b60fabf077dba3cb694a632ac178c1b
+2026-10-13 08:41:20,607 INFO  [io.git.hec.flo.ser.lam.LambdaService] Deleted Lambda function: lab04-pruebas-humo
+2026-10-13 08:41:22,273 INFO  [io.git.hec.flo.ser.iam.IamService] Deleted IAM role: lab04-funcion
+2026-10-13 08:41:23,927 INFO  [io.git.hec.flo.ser.iam.IamService] Deleted IAM role: lab04-codedeploy
+2026-10-13 08:41:25,972 INFO  [io.git.hec.flo.ser.iam.IamService] Deleted IAM role: lab04-hook

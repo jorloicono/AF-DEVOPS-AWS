@@ -1,0 +1,562 @@
++ set +e
++ echo
+
++ echo '################ BLOQUE 1 ################'
+################ BLOQUE 1 ################
++ mkdir -p /home/runner/lab04
++ cd /home/runner/lab04
+++ confianza lambda.amazonaws.com
+++ echo '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
++ aws iam create-role --role-name lab04-funcion --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' --query Role.Arn --output text
+arn:aws:iam::000000000000:role/lab04-funcion
++ aws iam attach-role-policy --role-name lab04-funcion --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+++ confianza codedeploy.amazonaws.com
+++ echo '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"codedeploy.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
++ aws iam create-role --role-name lab04-codedeploy --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"codedeploy.amazonaws.com"},"Action":"sts:AssumeRole"}]}' --query Role.Arn --output text
+arn:aws:iam::000000000000:role/lab04-codedeploy
++ aws iam attach-role-policy --role-name lab04-codedeploy --policy-arn arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda
+++ confianza lambda.amazonaws.com
+++ echo '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
++ aws iam create-role --role-name lab04-hook --assume-role-policy-document '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}' --query Role.Arn --output text
+arn:aws:iam::000000000000:role/lab04-hook
++ aws iam attach-role-policy --role-name lab04-hook --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
++ aws iam put-role-policy --role-name lab04-hook --policy-name pruebas-humo --policy-document '{
+  "Version": "2012-10-17",
+  "Statement": [
+    { "Effect": "Allow", "Action": "lambda:InvokeFunction", "Resource": "arn:aws:lambda:*:*:function:lab04-saludo*" },
+    { "Effect": "Allow", "Action": ["codedeploy:PutLifecycleEventHookExecutionStatus", "codedeploy:GetDeployment"], "Resource": "*" }
+  ]}'
+++ aws iam get-role --role-name lab04-funcion --query Role.Arn --output text
++ export ROL_FN=arn:aws:iam::000000000000:role/lab04-funcion
++ ROL_FN=arn:aws:iam::000000000000:role/lab04-funcion
+++ aws iam get-role --role-name lab04-codedeploy --query Role.Arn --output text
++ export ROL_CD=arn:aws:iam::000000000000:role/lab04-codedeploy
++ ROL_CD=arn:aws:iam::000000000000:role/lab04-codedeploy
+++ aws iam get-role --role-name lab04-hook --query Role.Arn --output text
++ export ROL_HOOK=arn:aws:iam::000000000000:role/lab04-hook
++ ROL_HOOK=arn:aws:iam::000000000000:role/lab04-hook
++ echo
+
++ echo '################ BLOQUE 2 ################'
+################ BLOQUE 2 ################
++ mkdir -p fn
++ cat
++ cd fn
++ rm -f ../fn.zip
++ python -m zipfile -c ../fn.zip index.py
++ aws lambda create-function --function-name lab04-saludo --runtime python3.12 --handler index.handler --role arn:aws:iam::000000000000:role/lab04-funcion --zip-file fileb://fn.zip --query State --output text
+Active
++ aws lambda wait function-active-v2 --function-name lab04-saludo
++ aws lambda publish-version --function-name lab04-saludo --description 1.0.0 --query Version --output text
+1
++ aws lambda create-alias --function-name lab04-saludo --name live --function-version 1 --query AliasArn --output text
+arn:aws:lambda:eu-west-1:000000000000:function:lab04-saludo:live
++ echo
+
++ echo '################ BLOQUE 3 ################'
+################ BLOQUE 3 ################
++ trafico 10
++ sort
+++ seq 1 10
++ awk '{printf "  %3d peticiones -> versión %s %s\n", $1, $2, ($3=="None"?"OK":"ERROR")}'
++ uniq -c
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
+   10 peticiones -> versión 1 OK
++ echo
+
++ echo '################ BLOQUE 4 ################'
+################ BLOQUE 4 ################
++ publicar 1.1.0 0.0
++ sed -i 's/^VERSION = .*/VERSION = "1.1.0"/; s/^TASA_ERROR = .*/TASA_ERROR = 0.0/' fn/index.py
++ cd fn
++ rm -f ../fn.zip
++ python -m zipfile -c ../fn.zip index.py
++ aws lambda update-function-code --function-name lab04-saludo --zip-file fileb://fn.zip --query LastUpdateStatus --output text
+Successful
++ aws lambda wait function-updated-v2 --function-name lab04-saludo
++ aws lambda publish-version --function-name lab04-saludo --description 1.1.0 --query Version --output text
+2
++ aws lambda update-alias --function-name lab04-saludo --name live --function-version 1 --routing-config 'AdditionalVersionWeights={2=0.2}' --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+[
+    "1",
+    {
+        "2": 0.2
+    }
+]
++ trafico 30
++ sort
+++ seq 1 30
++ uniq -c
++ awk '{printf "  %3d peticiones -> versión %s %s\n", $1, $2, ($3=="None"?"OK":"ERROR")}'
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
+   25 peticiones -> versión 1 OK
+    5 peticiones -> versión 2 OK
++ echo
+
++ echo '################ BLOQUE 5 ################'
+################ BLOQUE 5 ################
++ aws lambda delete-alias --function-name lab04-saludo --name live
++ aws lambda create-alias --function-name lab04-saludo --name live --function-version 1 --query '[FunctionVersion,RoutingConfig]' --output json
+[
+    "1",
+    null
+]
++ trafico 10
+++ seq 1 10
++ awk '{printf "  %3d peticiones -> versión %s %s\n", $1, $2, ($3=="None"?"OK":"ERROR")}'
++ sort
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ uniq -c
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
+   10 peticiones -> versión 1 OK
++ echo
+
++ echo '################ BLOQUE 6 ################'
+################ BLOQUE 6 ################
++ mkdir -p hook
++ cat
++ cd hook
++ rm -f ../hook.zip
++ python -m zipfile -c ../hook.zip index.py
++ aws lambda create-function --function-name lab04-pruebas-humo --runtime python3.12 --handler index.handler --role arn:aws:iam::000000000000:role/lab04-hook --zip-file fileb://hook.zip --timeout 60 --query State --output text
+Active
++ aws lambda wait function-active-v2 --function-name lab04-pruebas-humo
++ echo
+
++ echo '################ BLOQUE 7 ################'
+################ BLOQUE 7 ################
++ aws deploy create-application --application-name lab04 --compute-platform Lambda
+{
+    "applicationId": "0532c2bc-df7e-44f0-b959-beafe822c391"
+}
++ aws deploy create-deployment-group --application-name lab04 --deployment-group-name live --service-role-arn arn:aws:iam::000000000000:role/lab04-codedeploy --deployment-config-name CodeDeployDefault.LambdaCanary10Percent5Minutes --deployment-style deploymentType=BLUE_GREEN,deploymentOption=WITH_TRAFFIC_CONTROL --auto-rollback-configuration enabled=true,events=DEPLOYMENT_FAILURE --query deploymentGroupId --output text
+d09a5075-18da-4e1b-8f01-ce7db477bac5
++ echo
+
++ echo '################ BLOQUE 8 ################'
+################ BLOQUE 8 ################
++ echo
+
++ echo '################ BLOQUE 9 ################'
+################ BLOQUE 9 ################
++ desplegar 2
+++ aws lambda get-alias --function-name lab04-saludo --name live --query FunctionVersion --output text
++ ACTUAL=1
++ cat
++ python -c 'import json; print(json.dumps({'\''revisionType'\'': '\''AppSpecContent'\'', '\''appSpecContent'\'': {'\''content'\'': open('\''appspec.json'\'').read()}}))'
+++ aws deploy create-deployment --application-name lab04 --deployment-group-name live --revision file://revision.json --query deploymentId --output text
++ DEP=d-80BCE371F
++ echo 'Despliegue d-80BCE371F: versión 1 -> versión 2'
+Despliegue d-80BCE371F: versión 1 -> versión 2
+++ seq 1 60
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-80BCE371F --query deploymentInfo.status --output text
++ S=InProgress
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["1",{"2":0.1}]'
+++ date +%T
++ echo '  08:40:40  InProgress  alias=["1",{"2":0.1}]'
+  08:40:40  InProgress  alias=["1",{"2":0.1}]
++ case "$S" in
++ sleep 1
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-80BCE371F --query deploymentInfo.status --output text
++ S=InProgress
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["1",{"2":0.1}]'
+++ date +%T
++ echo '  08:40:42  InProgress  alias=["1",{"2":0.1}]'
+  08:40:42  InProgress  alias=["1",{"2":0.1}]
++ case "$S" in
++ sleep 1
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-80BCE371F --query deploymentInfo.status --output text
++ S=InProgress
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["1",{"2":0.1}]'
+++ date +%T
++ echo '  08:40:44  InProgress  alias=["1",{"2":0.1}]'
+  08:40:44  InProgress  alias=["1",{"2":0.1}]
++ case "$S" in
++ sleep 1
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-80BCE371F --query deploymentInfo.status --output text
++ S=Succeeded
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["2",null]'
+++ date +%T
++ echo '  08:40:45  Succeeded  alias=["2",null]'
+  08:40:45  Succeeded  alias=["2",null]
++ case "$S" in
++ break
++ aws deploy get-deployment --deployment-id d-80BCE371F --query 'deploymentInfo.[status,errorInformation.code,errorInformation.message]' --output text
+Succeeded	None	None
++ trafico 10
++ sort
++ uniq -c
+++ seq 1 10
++ awk '{printf "  %3d peticiones -> versión %s %s\n", $1, $2, ($3=="None"?"OK":"ERROR")}'
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
+   10 peticiones -> versión 2 OK
++ echo
+
++ echo '################ BLOQUE 10 ################'
+################ BLOQUE 10 ################
++ aws logs filter-log-events --log-group-name /aws/lambda/lab04-pruebas-humo --query 'events[].message' --output text
++ tr '\t' '\n'
++ grep 'Pruebas de humo'
+Pruebas de humo sobre la versión 2: 0/10 errores -> Succeeded
++ echo
+
++ echo '################ BLOQUE 11 ################'
+################ BLOQUE 11 ################
++ publicar 2.0.0 0.5
++ sed -i 's/^VERSION = .*/VERSION = "2.0.0"/; s/^TASA_ERROR = .*/TASA_ERROR = 0.5/' fn/index.py
++ cd fn
++ rm -f ../fn.zip
++ python -m zipfile -c ../fn.zip index.py
++ aws lambda update-function-code --function-name lab04-saludo --zip-file fileb://fn.zip --query LastUpdateStatus --output text
+Successful
++ aws lambda wait function-updated-v2 --function-name lab04-saludo
++ aws lambda publish-version --function-name lab04-saludo --description 2.0.0 --query Version --output text
+3
++ desplegar 3
+++ aws lambda get-alias --function-name lab04-saludo --name live --query FunctionVersion --output text
++ ACTUAL=2
++ cat
++ python -c 'import json; print(json.dumps({'\''revisionType'\'': '\''AppSpecContent'\'', '\''appSpecContent'\'': {'\''content'\'': open('\''appspec.json'\'').read()}}))'
+++ aws deploy create-deployment --application-name lab04 --deployment-group-name live --revision file://revision.json --query deploymentId --output text
++ DEP=d-6324AB5E6
++ echo 'Despliegue d-6324AB5E6: versión 2 -> versión 3'
+Despliegue d-6324AB5E6: versión 2 -> versión 3
+++ seq 1 60
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-6324AB5E6 --query deploymentInfo.status --output text
++ S=Failed
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["2",null]'
+++ date +%T
++ echo '  08:40:53  Failed  alias=["2",null]'
+  08:40:53  Failed  alias=["2",null]
++ case "$S" in
++ break
++ aws deploy get-deployment --deployment-id d-6324AB5E6 --query 'deploymentInfo.[status,errorInformation.code,errorInformation.message]' --output text
+Failed	HOOK_EXECUTION_FAILURE	Hook function reported failure: BeforeAllowTraffic
++ echo
+
++ echo '################ BLOQUE 12 ################'
+################ BLOQUE 12 ################
++ trafico 20
++ sort
+++ seq 1 20
++ uniq -c
++ awk '{printf "  %3d peticiones -> versión %s %s\n", $1, $2, ($3=="None"?"OK":"ERROR")}'
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
+   20 peticiones -> versión 2 OK
++ aws logs filter-log-events --log-group-name /aws/lambda/lab04-pruebas-humo --query 'events[].message' --output text
++ tr '\t' '\n'
++ grep 'Pruebas de humo'
+Pruebas de humo sobre la versión 2: 0/10 errores -> Succeeded
+Pruebas de humo sobre la versión 3: 6/10 errores -> Failed
++ aws deploy list-deployments --application-name lab04 --deployment-group-name live --query deployments --output text
++ tr '\t' '\n'
++ read d
++ aws deploy get-deployment --deployment-id d-6324AB5E6 --query 'deploymentInfo.[deploymentId,status,errorInformation.code]' --output text
+d-6324AB5E6	Failed	HOOK_EXECUTION_FAILURE
++ read d
++ aws deploy get-deployment --deployment-id d-80BCE371F --query 'deploymentInfo.[deploymentId,status,errorInformation.code]' --output text
+d-80BCE371F	Succeeded	None
++ read d
++ echo
+
++ echo '################ BLOQUE 13 ################'
+################ BLOQUE 13 ################
++ publicar 2.0.1 0.0
++ sed -i 's/^VERSION = .*/VERSION = "2.0.1"/; s/^TASA_ERROR = .*/TASA_ERROR = 0.0/' fn/index.py
++ cd fn
++ rm -f ../fn.zip
++ python -m zipfile -c ../fn.zip index.py
++ aws lambda update-function-code --function-name lab04-saludo --zip-file fileb://fn.zip --query LastUpdateStatus --output text
+Successful
++ aws lambda wait function-updated-v2 --function-name lab04-saludo
++ aws lambda publish-version --function-name lab04-saludo --description 2.0.1 --query Version --output text
+4
++ desplegar 4
+++ aws lambda get-alias --function-name lab04-saludo --name live --query FunctionVersion --output text
++ ACTUAL=2
++ cat
++ python -c 'import json; print(json.dumps({'\''revisionType'\'': '\''AppSpecContent'\'', '\''appSpecContent'\'': {'\''content'\'': open('\''appspec.json'\'').read()}}))'
+++ aws deploy create-deployment --application-name lab04 --deployment-group-name live --revision file://revision.json --query deploymentId --output text
++ DEP=d-1F52E662E
++ echo 'Despliegue d-1F52E662E: versión 2 -> versión 4'
+Despliegue d-1F52E662E: versión 2 -> versión 4
+++ seq 1 60
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-1F52E662E --query deploymentInfo.status --output text
++ S=InProgress
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["2",{"4":0.1}]'
+++ date +%T
++ echo '  08:41:06  InProgress  alias=["2",{"4":0.1}]'
+  08:41:06  InProgress  alias=["2",{"4":0.1}]
++ case "$S" in
++ sleep 1
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-1F52E662E --query deploymentInfo.status --output text
++ S=InProgress
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["2",{"4":0.1}]'
+++ date +%T
++ echo '  08:41:08  InProgress  alias=["2",{"4":0.1}]'
+  08:41:08  InProgress  alias=["2",{"4":0.1}]
++ case "$S" in
++ sleep 1
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-1F52E662E --query deploymentInfo.status --output text
++ S=InProgress
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["2",{"4":0.1}]'
+++ date +%T
++ echo '  08:41:10  InProgress  alias=["2",{"4":0.1}]'
+  08:41:10  InProgress  alias=["2",{"4":0.1}]
++ case "$S" in
++ sleep 1
++ for i in $(seq 1 60)
+++ aws deploy get-deployment --deployment-id d-1F52E662E --query deploymentInfo.status --output text
++ S=Succeeded
+++ aws lambda get-alias --function-name lab04-saludo --name live --query '[FunctionVersion,RoutingConfig.AdditionalVersionWeights]' --output json
+++ tr -d ' \n'
++ A='["4",null]'
+++ date +%T
++ echo '  08:41:12  Succeeded  alias=["4",null]'
+  08:41:12  Succeeded  alias=["4",null]
++ case "$S" in
++ break
++ aws deploy get-deployment --deployment-id d-1F52E662E --query 'deploymentInfo.[status,errorInformation.code,errorInformation.message]' --output text
+Succeeded	None	None
++ trafico 10
++ sort
+++ seq 1 10
++ uniq -c
++ awk '{printf "  %3d peticiones -> versión %s %s\n", $1, $2, ($3=="None"?"OK":"ERROR")}'
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
++ for i in $(seq 1 $1)
++ aws lambda invoke --function-name lab04-saludo:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/respuesta.json --query '[ExecutedVersion,FunctionError]' --output text
+   10 peticiones -> versión 4 OK
++ echo
+
++ echo '################ BLOQUE 14 ################'
+################ BLOQUE 14 ################
++ cd /home/runner/lab04
++ aws deploy delete-deployment-group --application-name lab04 --deployment-group-name live
+{
+    "hooksNotCleanedUp": []
+}
++ aws deploy delete-application --application-name lab04
++ aws lambda delete-function --function-name lab04-saludo
+{
+    "StatusCode": 204
+}
++ aws lambda delete-function --function-name lab04-pruebas-humo
+{
+    "StatusCode": 204
+}
++ for r in lab04-funcion lab04-codedeploy lab04-hook
+++ aws iam list-attached-role-policies --role-name lab04-funcion --query 'AttachedPolicies[].PolicyArn' --output text
++ for p in $(aws iam list-attached-role-policies --role-name $r --query "AttachedPolicies[].PolicyArn" --output text)
++ aws iam detach-role-policy --role-name lab04-funcion --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+++ aws iam list-role-policies --role-name lab04-funcion --query PolicyNames --output text
++ aws iam delete-role --role-name lab04-funcion
++ for r in lab04-funcion lab04-codedeploy lab04-hook
+++ aws iam list-attached-role-policies --role-name lab04-codedeploy --query 'AttachedPolicies[].PolicyArn' --output text
++ for p in $(aws iam list-attached-role-policies --role-name $r --query "AttachedPolicies[].PolicyArn" --output text)
++ aws iam detach-role-policy --role-name lab04-codedeploy --policy-arn arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda
+++ aws iam list-role-policies --role-name lab04-codedeploy --query PolicyNames --output text
++ aws iam delete-role --role-name lab04-codedeploy
++ for r in lab04-funcion lab04-codedeploy lab04-hook
+++ aws iam list-attached-role-policies --role-name lab04-hook --query 'AttachedPolicies[].PolicyArn' --output text
++ for p in $(aws iam list-attached-role-policies --role-name $r --query "AttachedPolicies[].PolicyArn" --output text)
++ aws iam detach-role-policy --role-name lab04-hook --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+++ aws iam list-role-policies --role-name lab04-hook --query PolicyNames --output text
++ for p in $(aws iam list-role-policies --role-name $r --query PolicyNames --output text)
++ aws iam delete-role-policy --role-name lab04-hook --policy-name pruebas-humo
++ aws iam delete-role --role-name lab04-hook
