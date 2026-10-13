@@ -158,6 +158,7 @@ Crea el change set **sin ejecutarlo**:
 aws cloudformation create-change-set \
   --stack-name $STACK \
   --change-set-name cambio-v2 \
+  --change-set-type UPDATE \
   --template-body file://plantilla_v2.yaml \
   --parameters ParameterKey=Entorno,UsePreviousValue=true ParameterKey=Sufijo,UsePreviousValue=true
 
@@ -168,7 +169,9 @@ aws cloudformation describe-change-set \
   --output table
 ```
 
-> **Punto de control 2.** Ves `BucketDatos` y `TemaAvisos` con acción `Modify`. **En AWS real**, la columna `Replacement` mostraría `False` para el bucket y `True` para el tema, y la consola señalaría `TopicName` como la propiedad que provoca el reemplazo. Si el emulador muestra `None` o no rellena esa columna, es una de sus limitaciones: la decisión de reemplazar la toma AWS según la documentación de cada propiedad (*Update requires: Replacement*), y consultarla antes de cambiar una propiedad es parte del trabajo.
+> **Punto de control 2.** `TemaAvisos` aparece con acción `Modify` y `Replacement = True`: cambiar `TopicName` obliga a crear un tema nuevo. `BucketDatos` aparece con `Modify` y `Replacement = False` (si el emulador no lo lista, en AWS real sí aparecería). La documentación de cada propiedad de CloudFormation indica si su cambio provoca reemplazo (*Update requires: Replacement*); consultarla antes de tocar una propiedad de un recurso con datos es parte del trabajo.
+
+> `--change-set-type UPDATE` indica que el change set es para un stack que ya existe. En AWS real es el valor por defecto y puedes omitirlo; el emulador necesita que se indique.
 
 **Pregunta:** si en lugar de un tema SNS fuese una base de datos con datos de clientes, ¿ejecutarías este change set? ¿Qué harías antes?
 
@@ -181,7 +184,7 @@ aws cloudformation describe-stacks --stack-name $STACK --query "Stacks[0].[Stack
 aws sns list-topics --output table
 ```
 
-Fíjate en el ARN del tema: ahora termina en `lab01-alertas-alumno`. Es un recurso nuevo.
+Fíjate en las salidas: el ARN del tema ahora termina en `lab01-alertas-alumno`. Es un recurso nuevo. En AWS real, CloudFormation borraría después el tema antiguo (`lab01-avisos-alumno`); el emulador lo deja en la lista, otra de sus diferencias.
 
 ## Paso 4 · Provocar y detectar drift
 
@@ -196,21 +199,13 @@ aws s3api put-bucket-tagging --bucket $BUCKET \
 aws s3api get-bucket-tagging --bucket $BUCKET --output table
 ```
 
-Intenta la detección automática de drift:
+En AWS real lanzarías ahora la detección automática de drift. Prueba el comando:
 
 ```bash
 aws cloudformation detect-stack-drift --stack-name $STACK
 ```
 
-Si el comando devuelve un identificador, sigue con:
-
-```bash
-sleep 5
-aws cloudformation describe-stack-resource-drifts --stack-name $STACK \
-  --query "StackResourceDrifts[].[LogicalResourceId,StackResourceDriftStatus]" --output table
-```
-
-Si devuelve un error de operación no implementada, haz la detección **a mano**, que es exactamente lo que hace CloudFormation por dentro: comparar el valor declarado con el real.
+El emulador responde `Action DetectStackDrift is not supported`. Así que haz la detección **a mano**, que es exactamente lo que hace CloudFormation por dentro: comparar el valor declarado con el real.
 
 ```bash
 DECLARADO=$(aws cloudformation describe-stacks --stack-name $STACK \
@@ -252,7 +247,7 @@ aws cloudformation update-termination-protection --stack-name $STACK --enable-te
 aws cloudformation delete-stack --stack-name $STACK
 ```
 
-Observa la respuesta. Después desactívala para poder limpiar. Si el emulador no la respeta, en AWS real el borrado devolvería un error de validación.
+Observa el error: *cannot be deleted while TerminationProtection is enabled*. Después desactívala para poder limpiar.
 
 ## Preguntas de reflexión
 

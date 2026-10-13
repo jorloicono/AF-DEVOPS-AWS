@@ -202,8 +202,10 @@ build() {
   echo; echo "Estado final: $ESTADO"
   aws codebuild batch-get-builds --ids $ID \
     --query "builds[0].phases[].[phaseType,phaseStatus,durationInSeconds]" --output table
-  echo "---- Últimas líneas del log ----"
-  aws logs tail /aws/codebuild/lab02 --since 10m | tail -40
+  echo "---- Log del build ----"
+  STREAM=$(aws codebuild batch-get-builds --ids $ID --query "builds[0].logs.streamName" --output text)
+  aws logs get-log-events --log-group-name /aws/codebuild/lab02 --log-stream-name "$STREAM" \
+    --query "events[].message" --output text | tr '\t' '\n' | tail -40
 }
 ```
 
@@ -228,10 +230,10 @@ Cuando termine, revisa:
 3. El artefacto:
 
 ```bash
-aws s3 ls s3://$BUCKET/artefactos/ --recursive
+aws s3 ls s3://$BUCKET/ --recursive
 ```
 
-> **Punto de control 1.** Build en `SUCCEEDED`, cuatro pruebas superadas en el log y `calculadora.zip` en el bucket.
+> **Punto de control 1.** Build en `SUCCEEDED`, cuatro pruebas superadas en el log y `calculadora.zip` en el bucket. En AWS real el artefacto quedaría dentro de la carpeta `artefactos/` que indicamos al crear el proyecto; el emulador lo deja en la raíz del bucket.
 
 ## Paso 5 · Romper una prueba
 
@@ -246,7 +248,7 @@ cd ..
 build
 ```
 
-> **Punto de control 2.** El build termina en `FAILED`, la fase `BUILD` aparece como fallida, el log muestra dos pruebas `FAILED` con su mensaje (`assert 21.0 == 121.0`) y la fase `POST_BUILD` no genera un artefacto nuevo. Esa es la función de la CI: impedir que un cambio defectuoso avance.
+> **Punto de control 2.** El build termina en `FAILED`, la fase `BUILD` aparece como fallida, el log muestra dos pruebas `FAILED` con su mensaje (`assert 21.0 == 121.0`) y el log se corta en la fase `BUILD`. Esa es la función de la CI: impedir que un cambio defectuoso avance.
 
 Ahora rompe el estilo en lugar de la lógica y observa en qué fase falla:
 

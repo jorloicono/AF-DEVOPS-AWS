@@ -1,0 +1,36 @@
+name: Probar laboratorios en el emulador
+on:
+  workflow_dispatch:
+  push:
+    paths: ["practicas/Lab0*/*.md", ".github/workflows/probar-labs.yml", ".github/ejecutar-lab.py"]
+permissions:
+  contents: write
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      AWS_ENDPOINT_URL: http://localhost:4566
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: eu-west-1
+      AWS_REGION: eu-west-1
+      AWS_PAGER: ""
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install --quiet cfn-lint pytest==8.3.3 ruff==0.6.9 && docker pull python:3.12-slim && bash .devcontainer/arrancar-emulador.sh
+      - name: Lab 01
+        run: python .github/ejecutar-lab.py practicas/Lab01_cloudformation/Lab01_cloudformation.md > lab01.sh && bash lab01.sh > lab01.txt 2>&1 || true
+      - name: Lab 02
+        run: python .github/ejecutar-lab.py practicas/Lab02_codebuild/Lab02_codebuild.md > lab02.sh && bash lab02.sh > lab02.txt 2>&1 || true
+      - name: Guardar resultados
+        if: always()
+        run: |
+          docker logs emulador-aws > emulador.log 2>&1 || true
+          git config user.name "pruebas"; git config user.email "pruebas@users.noreply.github.com"
+          git checkout --orphan resultados-labs
+          git rm -rq --cached . ; git add -f lab01.txt lab02.txt emulador.log
+          git commit -qm "Resultados $GITHUB_RUN_ID"
+          git push -qf origin resultados-labs
