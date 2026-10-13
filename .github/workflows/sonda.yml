@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     paths: [".github/sonda.sh", ".github/workflows/sonda.yml"]
+permissions:
+  contents: write
 jobs:
   sonda:
     runs-on: ubuntu-latest
@@ -21,6 +23,9 @@ jobs:
       - name: Publicar
         if: always()
         run: |
-          split -l 120 sonda.txt parte_
-          for f in parte_*; do echo "::notice title=$f::$(sed ':a;N;$!ba;s/%/%25/g;s/\r//g;s/\n/%0A/g' $f)"; done
-          echo "::notice title=emulador::$(docker logs emulador-aws 2>&1 | grep -iE 'warn|error|exception' | tail -60 | sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g')"
+          docker logs emulador-aws > emulador.log 2>&1 || true
+          git config user.name "sonda"; git config user.email "sonda@users.noreply.github.com"
+          git checkout --orphan sonda-resultados
+          git rm -rq --cached . ; git add -f sonda.txt emulador.log
+          git commit -qm "Resultado de la sonda $GITHUB_RUN_ID"
+          git push -qf origin sonda-resultados
