@@ -12,7 +12,7 @@ Crear un proyecto de CodeBuild que, a partir de un código fuente en S3, ejecute
 
 Igual que en el Lab 01: trabajas en un Codespace y la CLI de AWS habla con el emulador en `http://localhost:4566`. Lo interesante de esta práctica es que el emulador **ejecuta de verdad** el build: arranca un contenedor Docker con la imagen del proyecto, copia dentro el código fuente y ejecuta las fases del `buildspec.yml`, igual que CodeBuild.
 
-> **Diferencias con AWS real en esta práctica.** Usamos la imagen pública `python:3.12-slim` en lugar de las imágenes gestionadas de CodeBuild, así que no usamos `runtime-versions`. Los informes de pruebas (`reports`) y la lectura de Parameter Store desde el buildspec (`env: parameter-store`) no están disponibles en el emulador: los resultados de las pruebas los verás en los logs, y al final de la práctica tienes cómo se escribirían en AWS real. No hay consola web: todo se hace con la CLI, que es como se automatiza en la vida real.
+> **Diferencias con AWS real en esta práctica.** Usamos la imagen pública `python:3.12-slim` en lugar de las imágenes gestionadas de CodeBuild, así que no usamos `runtime-versions`. El emulador **no envía la salida del build a CloudWatch Logs**, así que el buildspec guarda su propio registro en un fichero `build.log` (con `tee`) y lo publica como artefacto en S3; `set -o pipefail` hace que el comando siga fallando aunque su salida pase por `tee`. Los informes de pruebas (`reports`) y la lectura de Parameter Store desde el buildspec (`env: parameter-store`) tampoco están disponibles. Al final de la práctica tienes cómo sería el buildspec en AWS real. No hay consola web: todo se hace con la CLI, que es como se automatiza en la vida real.
 
 ## Requisitos
 
@@ -130,26 +130,27 @@ EOF2
 cat > buildspec.yml <<'EOF2'
 version: 0.2
 env:
+  shell: bash
   variables:
     ENTORNO: formacion
 phases:
   install:
     commands:
-      - pip install --quiet -r requirements-dev.txt
+      - set -o pipefail; pip install --quiet -r requirements-dev.txt 2>&1 | tee -a build.log
   pre_build:
     commands:
-      - echo "Build para el entorno $ENTORNO"
-      - ruff check src tests
+      - echo "Build para el entorno $ENTORNO" | tee -a build.log
+      - set -o pipefail; ruff check src tests 2>&1 | tee -a build.log
   build:
     commands:
-      - python -m pytest -v --junitxml=reports/junit.xml
+      - set -o pipefail; python -m pytest -v 2>&1 | tee -a build.log
   post_build:
     commands:
       - python -m zipfile -c calculadora.zip src
-      - echo "Artefacto generado"
 artifacts:
   files:
     - calculadora.zip
+    - build.log
 EOF2
 ```
 
@@ -185,7 +186,7 @@ aws codebuild batch-get-projects --names lab02 \
 |---|---|---|
 | `source` | S3, `fuente/fuente.zip` | De dónde sale el código. En AWS real también puede ser GitHub o CodeCommit. |
 | `environment.image` | `python:3.12-slim` | Contenedor en el que se ejecuta el build. En AWS real, una imagen gestionada como `aws/codebuild/amazonlinux-x86_64-standard:5.0`. |
-| `artifacts` | S3, carpeta `artefactos` | Dónde se deja lo que produce el build. |
+| `artifacts` | S3, carpeta `artefactos` | Dónde se deja lo que produce el build. El emulador lo deja en la raíz del bucket. |
 | `service-role` | `lab02-codebuild` | Identidad con la que se ejecuta el build. |
 
 Define una pequeña función para lanzar un build, esperar a que termine y enseñar su resultado y sus logs. La usarás varias veces:
@@ -202,10 +203,8 @@ build() {
   echo; echo "Estado final: $ESTADO"
   aws codebuild batch-get-builds --ids $ID \
     --query "builds[0].phases[].[phaseType,phaseStatus,durationInSeconds]" --output table
-  echo "---- Log del build ----"
-  STREAM=$(aws codebuild batch-get-builds --ids $ID --query "builds[0].logs.streamName" --output text)
-  aws logs get-log-events --log-group-name /aws/codebuild/lab02 --log-stream-name "$STREAM" \
-    --query "events[].message" --output text | tr '\t' '\n' | tail -40
+  echo "---- Log del build (build.log) ----"
+  aws s3 cp s3://$BUCKET/build.log - | tail -40
 }
 ```
 
@@ -215,17 +214,17 @@ build() {
 build
 ```
 
-Mientras se ejecuta, abre otra terminal (icono **+** del panel de terminal) y mira qué está pasando por debajo:
+Para ver qué pasa por debajo, abre otra terminal (icono **+** del panel de terminal), deja en marcha este comando y lanza otro `build` en la primera terminal:
 
 ```bash
-docker ps
+watch -n 1 docker ps
 ```
 
-Verás, además del emulador, un contenedor `python:3.12-slim` creado para el build: así trabaja CodeBuild, un contenedor efímero por build que se destruye al terminar.
+Durante unos segundos aparece, además del emulador, un contenedor `python:3.12-slim` creado para el build: así trabaja CodeBuild, un contenedor efímero por build que se destruye al terminar. Sal de `watch` con Ctrl+C.
 
 Cuando termine, revisa:
 
-1. En el log, la línea `Build para el entorno formacion` y los cuatro tests `PASSED` de `pytest -v`.
+1. En el log (`build.log`), la línea `Build para el entorno formacion` y los cuatro tests `PASSED` de `pytest -v`.
 2. En la tabla de fases, cuál ha durado más. Normalmente es `INSTALL`, por la descarga de dependencias.
 3. El artefacto:
 
@@ -233,7 +232,7 @@ Cuando termine, revisa:
 aws s3 ls s3://$BUCKET/ --recursive
 ```
 
-> **Punto de control 1.** Build en `SUCCEEDED`, cuatro pruebas superadas en el log y `calculadora.zip` en el bucket. En AWS real el artefacto quedaría dentro de la carpeta `artefactos/` que indicamos al crear el proyecto; el emulador lo deja en la raíz del bucket.
+> **Punto de control 1.** Build en `SUCCEEDED`, cuatro pruebas superadas en el log y `calculadora.zip` y `build.log` en el bucket. En AWS real el artefacto quedaría dentro de la carpeta `artefactos/` que indicamos al crear el proyecto, y el log estaría en CloudWatch Logs.
 
 ## Paso 5 · Romper una prueba
 
@@ -248,7 +247,7 @@ cd ..
 build
 ```
 
-> **Punto de control 2.** El build termina en `FAILED`, la fase `BUILD` aparece como fallida, el log muestra dos pruebas `FAILED` con su mensaje (`assert 21.0 == 121.0`) y el log se corta en la fase `BUILD`. Esa es la función de la CI: impedir que un cambio defectuoso avance.
+> **Punto de control 2.** El build termina en `FAILED`, la fase `BUILD` aparece como fallida y el log muestra dos pruebas `FAILED` con su mensaje (`assert 21.0 == 121.0`). Esa es la función de la CI: impedir que un cambio defectuoso avance. Mañana veremos que una pipeline se detiene en este punto y no despliega nada.
 
 Ahora rompe el estilo en lugar de la lógica y observa en qué fase falla:
 
@@ -277,7 +276,7 @@ build
 
 ## Paso 6 · Cómo sería en AWS real
 
-En una cuenta de AWS, el `buildspec.yml` de esta práctica tendría tres diferencias. Léelas y compáralas con el tuyo:
+En una cuenta de AWS, el `buildspec.yml` de esta práctica sería más limpio: no necesitaría `tee` ni `build.log`, porque la salida va sola a CloudWatch Logs, y añadiría tres cosas que el emulador no tiene. Compáralo con el tuyo:
 
 ```yaml
 version: 0.2

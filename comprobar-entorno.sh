@@ -51,14 +51,15 @@ aws ssm put-parameter --name /comprobar/p --value x --type String --overwrite >/
 mkdir src && echo "print('fuente OK')" > src/hola.py
 cat > src/buildspec.yml <<'T'
 version: 0.2
+env:
+  shell: bash
 phases:
   build:
     commands:
-      - python --version
-      - python hola.py
+      - set -o pipefail; python hola.py 2>&1 | tee -a build.log
       - python -m zipfile -c salida.zip hola.py
 artifacts:
-  files: [salida.zip]
+  files: [salida.zip, build.log]
 T
 (cd src && python3 -m zipfile -c ../fuente.zip hola.py buildspec.yml)
 aws s3 cp fuente.zip s3://comprobar-cb/fuente.zip >/dev/null 2>&1
@@ -74,9 +75,9 @@ B=$(aws codebuild start-build --project-name comprobar-cb --query build.id --out
 ST=""; for i in $(seq 1 60); do
   ST=$(aws codebuild batch-get-builds --ids "$B" --query "builds[0].buildStatus" --output text 2>/dev/null)
   [ "$ST" != "IN_PROGRESS" ] && [ -n "$ST" ] && break; sleep 3; done
-[ "$ST" = "SUCCEEDED" ] && ok "el build se ejecuta y termina en SUCCEEDED" || mal "estado del build: $ST (revisa: aws logs tail /aws/codebuild/comprobar-cb)"
-aws logs tail /aws/codebuild/comprobar-cb 2>/dev/null | grep -q "fuente OK" && ok "logs del build en CloudWatch Logs (la fuente S3 llega al contenedor)" || aviso "no encuentro 'fuente OK' en los logs del build"
-aws s3 ls s3://comprobar-cb/artefactos/ --recursive 2>/dev/null | grep -q salida.zip && ok "artefacto subido a S3" || aviso "no encuentro el artefacto en s3://comprobar-cb/artefactos/"
+[ "$ST" = "SUCCEEDED" ] && ok "el build se ejecuta y termina en SUCCEEDED" || mal "estado del build: $ST "
+aws s3 cp s3://comprobar-cb/build.log - 2>/dev/null | grep -q "fuente OK" && ok "el código de S3 se ejecuta en el contenedor y build.log llega a S3" || mal "no encuentro build.log con 'fuente OK' en s3://comprobar-cb/"
+aws s3 ls s3://comprobar-cb/ --recursive 2>/dev/null | grep -q salida.zip && ok "artefacto subido a S3" || mal "no encuentro el artefacto en s3://comprobar-cb/"
 
 echo "== Sesión 2 (orientativo)"
 aws codepipeline list-pipelines >/dev/null 2>&1 && ok "CodePipeline responde" || aviso "CodePipeline no responde"
