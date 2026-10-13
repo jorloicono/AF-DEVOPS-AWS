@@ -101,7 +101,7 @@ aws lambda create-function --function-name sonda-fn --runtime python3.12 --handl
 sleep 5
 aws lambda publish-version --function-name sonda-fn --query Version --output text 2>&1
 aws lambda create-alias --function-name sonda-fn --name live --function-version 1 --output text 2>&1
-aws lambda invoke --function-name sonda-fn:live --payload '{}' --cli-binary-format raw-in-base64-out /dev/stdout 2>&1
+aws lambda invoke --function-name sonda-fn:live --payload '{}' --cli-binary-format raw-in-base64-out /tmp/inv.json 2>&1; cat /tmp/inv.json; echo
 echo "### SAM transform en CFN"
 cat > sam.yaml <<'T'
 AWSTemplateFormatVersion: "2010-09-09"
