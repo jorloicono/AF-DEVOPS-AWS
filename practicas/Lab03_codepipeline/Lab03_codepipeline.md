@@ -315,7 +315,7 @@ aprobar() {   # uso: aprobar Approved|Rejected "comentario"
   TOKEN=$(aws codepipeline get-pipeline-state --name lab03 \
     --query "stageStates[?stageName=='Aprobacion'].actionStates[0].latestExecution.token" --output text)
   aws codepipeline put-approval-result --pipeline-name lab03 --stage-name Aprobacion \
-    --action-name Aprobar --token "$TOKEN" --result "status=$1,summary=$2"
+    --action-name Aprobar --token "$TOKEN" --result "{\"status\": \"$1\", \"summary\": \"$2\"}"
 }
 
 aprobar Approved "Revisado en pre, todo correcto"

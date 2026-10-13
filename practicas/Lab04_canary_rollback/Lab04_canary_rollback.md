@@ -131,7 +131,7 @@ Hacerlo a mano tiene dos problemas: alguien tiene que vigilar y alguien tiene qu
 
 ```bash
 aws lambda update-alias --function-name lab04-saludo --name live --function-version 1 \
-  --routing-config AdditionalVersionWeights={} \
+  --routing-config '{"AdditionalVersionWeights": {}}' \
   --query "[FunctionVersion,RoutingConfig.AdditionalVersionWeights]" --output json
 ```
 
