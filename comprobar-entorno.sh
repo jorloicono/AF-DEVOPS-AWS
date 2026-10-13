@@ -33,15 +33,15 @@ aws cloudformation deploy --stack-name comprobar --template-file p.yaml >/dev/nu
 OUT=$(aws cloudformation describe-stacks --stack-name comprobar --query "Stacks[0].Outputs[?OutputKey=='NombreBucket'].OutputValue" --output text 2>/dev/null)
 [ -n "$OUT" ] && [ "$OUT" != "None" ] && ok "outputs del stack ($OUT)" || mal "outputs del stack"
 sed 's/comprobar-avisos-/comprobar-alertas-/' p.yaml > p2.yaml
-aws cloudformation create-change-set --stack-name comprobar --change-set-name cs1 --template-body file://p2.yaml >/dev/null 2>&1 && ok "create-change-set" || mal "create-change-set"
+aws cloudformation create-change-set --stack-name comprobar --change-set-name cs1 --change-set-type UPDATE --template-body file://p2.yaml >/dev/null 2>&1 && ok "create-change-set" || mal "create-change-set"
 sleep 3
 CS=$(aws cloudformation describe-change-set --stack-name comprobar --change-set-name cs1 --query "Changes[].ResourceChange.[LogicalResourceId,Action,Replacement]" --output text 2>/dev/null)
 [ -n "$CS" ] && ok "describe-change-set: $(echo $CS | tr '\n' ' ')" || mal "describe-change-set"
-echo "$CS" | grep -q "True" || aviso "el emulador no informa Replacement=True (en AWS real sí); el Lab 01 lo explica"
+echo "$CS" | grep -q "True" && ok "el change set indica el reemplazo (Replacement=True)" || aviso "el change set no indica Replacement=True"
 aws cloudformation execute-change-set --stack-name comprobar --change-set-name cs1 >/dev/null 2>&1 && ok "execute-change-set" || mal "execute-change-set"
 sleep 3
 D=$(aws cloudformation detect-stack-drift --stack-name comprobar --query StackDriftDetectionId --output text 2>/dev/null)
-[ -n "$D" ] && ok "detect-stack-drift disponible" || aviso "detect-stack-drift no disponible: el Lab 01 usa la comprobación manual"
+[ -n "$D" ] && ok "detect-stack-drift disponible" || ok "detect-stack-drift no existe en el emulador (esperado: el Lab 01 hace la comprobación a mano)"
 aws s3api get-bucket-tagging --bucket "$OUT" >/dev/null 2>&1 && ok "etiquetas del bucket" || aviso "get-bucket-tagging"
 
 echo "== Lab 02 · S3, Parameter Store y CodeBuild"

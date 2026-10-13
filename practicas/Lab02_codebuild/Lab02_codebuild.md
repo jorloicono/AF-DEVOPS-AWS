@@ -136,7 +136,7 @@ env:
 phases:
   install:
     commands:
-      - set -o pipefail; pip install --quiet -r requirements-dev.txt 2>&1 | tee -a build.log
+      - set -o pipefail; pip install --quiet --root-user-action=ignore --disable-pip-version-check -r requirements-dev.txt 2>&1 | tee -a build.log
   pre_build:
     commands:
       - echo "Build para el entorno $ENTORNO" | tee -a build.log

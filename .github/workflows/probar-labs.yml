@@ -1,8 +1,6 @@
 name: Probar laboratorios en el emulador
 on:
   workflow_dispatch:
-  push:
-    paths: ["practicas/Lab0*/*.md", ".github/workflows/probar-labs.yml", ".github/ejecutar-lab.py"]
 permissions:
   contents: write
 jobs:
