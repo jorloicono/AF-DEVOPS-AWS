@@ -1,6 +1,8 @@
 name: Probar laboratorios en el emulador
 on:
   workflow_dispatch:
+    inputs:
+      labs: { description: 'Labs a probar', default: '01 02 03 04' }
 permissions:
   contents: write
 jobs:
@@ -20,13 +22,17 @@ jobs:
         with: { python-version: "3.12" }
       - run: pip install --quiet cfn-lint pytest==8.3.3 ruff==0.6.9 && docker pull python:3.12-slim && bash .devcontainer/arrancar-emulador.sh
       - name: Lab 01
-        run: python .github/ejecutar-lab.py practicas/Lab01_cloudformation/Lab01_cloudformation.md > lab01.sh && bash lab01.sh > lab01.txt 2>&1 || true
+        if: contains(inputs.labs, '01')
+        run: python .github/ejecutar-lab.py practicas/Lab01_cloudformation/Lab01_cloudformation.md > lab01.sh && timeout 900 bash -x lab01.sh > lab01.txt 2>&1 || true
       - name: Lab 02
-        run: python .github/ejecutar-lab.py practicas/Lab02_codebuild/Lab02_codebuild.md > lab02.sh && bash lab02.sh > lab02.txt 2>&1 || true
+        if: contains(inputs.labs, '02')
+        run: python .github/ejecutar-lab.py practicas/Lab02_codebuild/Lab02_codebuild.md > lab02.sh && timeout 900 bash -x lab02.sh > lab02.txt 2>&1 || true
       - name: Lab 03
-        run: python .github/ejecutar-lab.py practicas/Lab03_codepipeline/Lab03_codepipeline.md > lab03.sh && bash lab03.sh > lab03.txt 2>&1 || true
+        if: contains(inputs.labs, '03')
+        run: python .github/ejecutar-lab.py practicas/Lab03_codepipeline/Lab03_codepipeline.md > lab03.sh && timeout 900 bash -x lab03.sh > lab03.txt 2>&1 || true
       - name: Lab 04
-        run: python .github/ejecutar-lab.py practicas/Lab04_canary_rollback/Lab04_canary_rollback.md > lab04.sh && bash lab04.sh > lab04.txt 2>&1 || true
+        if: contains(inputs.labs, '04')
+        run: python .github/ejecutar-lab.py practicas/Lab04_canary_rollback/Lab04_canary_rollback.md > lab04.sh && timeout 900 bash -x lab04.sh > lab04.txt 2>&1 || true
       - name: Guardar resultados
         if: always()
         run: |
