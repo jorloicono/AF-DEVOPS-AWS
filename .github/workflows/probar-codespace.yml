@@ -3,20 +3,25 @@ on:
   workflow_dispatch:
   push:
     paths: [".devcontainer/**", ".github/workflows/probar-codespace.yml"]
+permissions:
+  contents: write
 jobs:
   devcontainer:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-      - name: Construir el devcontainer y ejecutar la comprobación dentro
-        uses: devcontainers/ci@v0.3
-        with:
-          push: never
-          runCmd: |
-            bash .devcontainer/arrancar-emulador.sh
-            bash comprobar-entorno.sh 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | tee resultado.txt
-      - name: Publicar el resultado
+      - name: Construir y probar con la CLI de devcontainers
+        run: |
+          npm install -g @devcontainers/cli >/dev/null 2>&1
+          devcontainer up --workspace-folder . > up.txt 2>&1; echo "up rc=$?" >> up.txt
+          devcontainer exec --workspace-folder . bash -lc 'bash .devcontainer/arrancar-emulador.sh && bash comprobar-entorno.sh' > resultado.txt 2>&1; echo "exec rc=$?" >> resultado.txt
+      - name: Guardar
         if: always()
         run: |
-          [ -f resultado.txt ] && echo "::notice title=Resultado en el devcontainer::$(sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g' resultado.txt)" || echo "::warning title=Sin resultado::no se generó resultado.txt"
+          tail -120 up.txt > up_tail.txt || true
+          sed -i 's/\x1b\[[0-9;]*m//g' resultado.txt up_tail.txt || true
+          git config user.name "pruebas"; git config user.email "pruebas@users.noreply.github.com"
+          git checkout --orphan resultados-codespace
+          git rm -rq --cached . ; git add -f up_tail.txt resultado.txt
+          git commit -qm "Resultado $GITHUB_RUN_ID"; git push -qf origin resultados-codespace
