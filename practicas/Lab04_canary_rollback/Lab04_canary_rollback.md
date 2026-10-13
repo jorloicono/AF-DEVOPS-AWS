@@ -247,7 +247,7 @@ desplegar 2
 trafico 10
 ```
 
-Mira lo que ha pasado en la salida: primero el despliegue está `InProgress` con el alias aún en la versión 1 (se están ejecutando las pruebas de humo), después el alias reparte el tráfico, por ejemplo `["1",{"2":0.1}]` (el canary) y, al terminar, `["2",null]`: todo el tráfico en la versión 2.
+Mira lo que ha pasado en la salida: antes de la primera línea, CodeDeploy ya ha ejecutado las pruebas de humo contra la versión 2; como las ha superado, el alias pasa a repartir el tráfico, `["1",{"2":0.1}]` (el canary: 10 % a la versión nueva) y, al terminar la espera, `["2",null]`: todo el tráfico en la versión 2.
 
 > **Punto de control 3.** El despliegue termina en `Succeeded` y las 10 peticiones las responde la versión 2. En AWS real, entre el 10 % y el 100 % pasarían 5 minutos; el emulador lo comprime a unos segundos.
 

@@ -30,7 +30,7 @@ La carpeta `presentaciones` contiene las diapositivas de cada sesión. La carpet
 | Lab 01 · Stacks, change sets y drift con CloudFormation | 1 | 50 min |
 | Lab 02 · Build y pruebas automatizadas con CodeBuild | 1 | 55 min |
 | Lab 03 · Pipeline completa con CodePipeline | 2 | 60 min |
-| Lab 04 · Canary de Lambda con rollback automático | 2 | 50 min |
+| Lab 04 · Despliegue canary y rollback automático con CodeDeploy | 2 | 60 min |
 
 ## Sobre el emulador
 
